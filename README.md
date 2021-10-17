@@ -1,11 +1,11 @@
 # Hyurs
-Hyurs is a tool that will download data from your Google Calendar, let you create mappings between (calendar, event-name) pairs and hierarchical tags, and then generate reports (and, in the future, graphs) of the hours taken up by various events.
+Hyurs is a tool that will download data from your Google Calendar, let you create mappings between (calendar, event-name) pairs and hierarchical tags, and then generate reports and graphs of the hours taken up by various events.
 
 For example, you might have an event in the calendar "Studying" called "revise computation theory". In a simple tagging system, maybe you'd get to tag it with "computation theory", but Hyurs is more fine-grained: you can give it a "hierarchical tag" like "computer science:computation theory:revision", that the calendar/event combination "Studying/revise computation theory" maps to.
 
 Once the downloaded data and event mapping exists, you can continue syncing by (currently) simply running the setup script again; you won't have to create the mapping from scratch every time, but only for any (calendar, event name) pairs in the newly-downloaded calendar data that aren't yet mapped to anything.
 
-The main purpose of Hyurs is that once you've done this, you can generate for any time period a report showing how you've spent time (in hours) across some set of your activities. The report will have a tree structure like this:
+The main purpose of Hyurs is that once you've done this, you can generate for any time period a report / pie chart / flame chart showing how you've spent time (in hours) across some set of your activities. The report will have a tree structure like this:
 
 * computer science: 74
   * computation theory: 29
@@ -15,18 +15,28 @@ The main purpose of Hyurs is that once you've done this, you can generate for an
   * ...
 * ...
 
-Hyurs also has a UI for generating graphs:
+An example pie chart looks like this:
 
 <img width="1440" alt="Example pie chart" src="https://user-images.githubusercontent.com/55555739/112853682-c7c52b00-90b5-11eb-9d4a-96dbb458af33.png">
+
+Flame chart:
+
+<img width="439" alt="image" src="https://user-images.githubusercontent.com/55555739/137621282-41e7897a-1e26-4029-ac63-99ff8506301b.png">
+
 
 The graphs are very customisable: you can filter in or out based on a set of tags, choose what intervals to graph and how many, and so on.
 
 ## Dependencies
 
 * The Google libraries listed [here](https://developers.google.com/calendar/quickstart/python), specifically: `google-api-python-client google-auth-httplib2 google-auth-oauthlib`.
+* Currently, if you want direct Goolge Calendar sync, you also need to do some annoying setup things as specified on the [Google Calendar Python integration guide](https://developers.google.com/calendar/api/quickstart/python) so that your Google Calendar knows to trust Hyurs, including either contacting me so that I add you to the test users list for the Hyurs API, or creating your own Google Cloud API (simple but takes a while).
+  * ALTERNATIVE: [Anthony Ozerov](https://github.com/anthonyozerov) made a pull request enabling sync from the standard iCalendar format (.ics).
 * [Hy](https://docs.hylang.org/en/stable/) v0.20 or later.
-* Python v3.9 or later.
+* Python 3
 
+## Use
+
+Run `setup.py` (check file for arguments) to sync from Google Calendar (or .ics file) to Hyurs.
 
 ## Functional goal
 
