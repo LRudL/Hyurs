@@ -31,17 +31,20 @@ if __name__ == '__main__':
     if len(calendar_names) == 0:
         print("WARNING: No calendars specified")
 
-    if args.ics:
-        event_objs=download.events_from_ics(calendar_names, start_time, n)
-    else:
-        event_objs = download.events_from_calendars(calendar_names, start_time, n)
-    data.save_json("data/imported.json", event_objs)
-
     if not os.path.exists('out'):
         os.makedirs('out')
 
     if not os.path.exists('data'):
         os.makedirs('data')
+
+    if not os.path.isfile("data/imported.json"):
+        data.save_json("data/imported.json", {})
+
+    if args.ics:
+        event_objs=download.events_from_ics(calendar_names, start_time, n)
+    else:
+        event_objs = download.events_from_calendars(calendar_names, start_time, n)
+    data.save_json("data/imported.json", event_objs)
 
     if not os.path.isfile("data/mapping.json"):
         data.save_json("data/mapping.json", {})
