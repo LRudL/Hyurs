@@ -40,13 +40,18 @@
     (get dict key)
     default))
 
+(defn merge-dictionaries
+  [dict1 dict2]
+  (.update dict1 dict2)
+  dict1)
+
 (defn merge-if-exists
   [dict key to-merge-with]
   """Updates dict[key] to be the merge of the current value and to-merge-with
      if it currently has a value, or just to-merge-with if there is no value."""
   (assoc dict key
-         (| (get-or dict key {})
-            to-merge-with))
+         (merge-dictionaries (get-or dict key {})
+                             to-merge-with))
   dict)
 
 (defn str-join
